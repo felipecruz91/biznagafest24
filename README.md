@@ -46,3 +46,33 @@ docker build -t felipecruz/scout-demo:v1 --push .
 ```
 
 ![v1-qv](images/v1-qv-web.png)
+
+## v2: Generate Supply Chain attestations
+
+In this step we're going to generate the following attestations: SBOM and provenance. These attestations will allow Scout to evaluate the "Supply chain attestations" policy.
+
+Let's simulate a code change in the `app.js` file and build a new image that contain SBOM and provenance attestations with the `--sbom=1` and `--provenance=mode=max` flags:
+
+```bash
+docker build -t felipecruz/scout-demo:v2 --sbom=1 --provenance=mode=max .
+```
+
+If we run the `quickview` command again, we can see that the image now has a SBOM and provenance attestation and thus the "Supply chain attestations" policy has passed.
+
+```bash
+✓      │ Supply chain attestations                      │    0 deviations
+```
+
+![v2-qv](images/v2-qv.png)
+
+Let's push the image to the registry so we can see the attestations in the registry:
+
+```bash
+docker build -t felipecruz/scout-demo:v2 --sbom=1 --provenance=mode=max --push .
+```
+
+Visit https://explore.ggcr.dev/?image=felipecruz%2Fscout-demo%3Av2 to explore the contents of the image and navigate to the attestation manifest. It contains the SBOM and provenance attestations.
+
+In the Scout UI we can see the results of the policy evaluations:
+
+![v2-qv-web](images/v2-qv-web.png)

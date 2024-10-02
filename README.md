@@ -76,3 +76,50 @@ Visit https://explore.ggcr.dev/?image=felipecruz%2Fscout-demo%3Av2 to explore th
 In the Scout UI we can see the results of the policy evaluations:
 
 ![v2-qv-web](images/v2-qv-web.png)
+
+## v3: Update base image
+
+As Scout is now able to identify what is the exact base image used in the Dockerfile, there are 2 policies that are failing:
+
+- Outdated base images found.
+- Unapproved base images found.
+
+We can obtain more information about these policies by running the following command:
+
+```bash
+docker scout policy felipecruz/scout-demo:v2 --only-policy "Outdated base images found" --only-policy "Unapproved base images found"
+```
+![v2-policy](images/v2-policy.png)
+
+The first policy tells us that the base image is outdated (there's a newer version of the base image available) and the second policy tells us that the base image is not approved by the organization because the tag is not supported.
+
+
+Let's use the `recommendations` command to find out what recommendations for base images updates are available:
+
+```bash
+docker scout recommendations felipecruz/scout-demo:v2
+```
+
+![v2-recommendations](images/v2-recommendations.png)
+
+
+The output shows that the preferred base image is `alpine:3.20` which results in removing all CVEs from the base image. Let's update the Dockerfile and build the new image:
+
+```bash
+docker build -t felipecruz/scout-demo:v3 --sbom=1 --provenance=mode=max .
+```
+
+If we run the `quickview` command again, we can see that the "Outdated base images found" policy has passed.
+
+```bash
+docker scout quickview felipecruz/scout-demo:v3
+```
+
+![v3-qv](images/v3-qv.png)
+
+Let's push the image to the registry so we can see the results in the Scout website:
+
+```bash
+docker build -t felipecruz/scout-demo:v3 --sbom=1 --provenance=mode=max --push .
+```
+![v3-qv-web](images/v3-qv-web.png)

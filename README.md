@@ -8,10 +8,19 @@ Date: 26/10/2024.
 
 Event: [BiznagaFest](https://www.biznagafest.com/) (Málaga, Spain).
 
+## Table of contents
+- [Docker Scout Talk (BiznagaFest 2024)](#docker-scout-talk-biznagafest-2024)
+  - [Table of contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [v1](#v1)
+  - [v2: Generate Supply Chain attestations](#v2-generate-supply-chain-attestations)
+  - [v3: Update base image](#v3-update-base-image)
+  - [v4: Run as non-root](#v4-run-as-non-root)
+  - [v5: Fix critical or high vulnerabilities](#v5-fix-critical-or-high-vulnerabilities)
+  - [Other resources](#other-resources)
+
 ## Introduction
 This repo contains a basic ExpressJS app which uses an intentionally old version of Express and Alpine base image to demonstrate how to use Docker Scout to improve the security of your Docker images via security policies.
-
-## Demo
 
 In this demo we will show how to use Docker Scout to improve the security of a Docker image by following a set of security policies. These policies are defined in a Scout organization, so we need to configure the Scout CLI to use my organization:
 
@@ -19,13 +28,13 @@ In this demo we will show how to use Docker Scout to improve the security of a D
 docker scout config organization felipecruz
 ```
 
+## v1
+
 Let's build the Docker image:
 
 ```bash
 docker build -t felipecruz/scout-demo:v1 .
 ```
-
-### v1
 
 To get a quick overview of the security of the image, we can use the `quickview` command:
 

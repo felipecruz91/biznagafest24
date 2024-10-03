@@ -125,7 +125,7 @@ docker build -t felipecruz/scout-demo:v3 --sbom=1 --provenance=mode=max --push .
 ![v3-qv-web](images/v3-qv-web.png)
 
 
-v4: Run as non-root
+## v4: Run as non-root
 
 In this step we're going to define a non-root user that the container should run as. This will allow us to pass the "Run as non-root" policy.
 
@@ -160,7 +160,7 @@ docker build -t felipecruz/scout-demo:v4 --sbom=1 --provenance=mode=max --push .
 
 ![v4-qv-web](images/v4-qv-web.png)
 
-# v5: Fix critical or high vulnerabilities
+## v5: Fix critical or high vulnerabilities
 
 In this step we're going to fix the critical and high vulnerabilities in the image. We can use the `cves` command to get a list of the vulnerabilities in the image:
 

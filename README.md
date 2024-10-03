@@ -159,3 +159,223 @@ docker build -t felipecruz/scout-demo:v4 --sbom=1 --provenance=mode=max --push .
 ```
 
 ![v4-qv-web](images/v4-qv-web.png)
+
+# v5: Fix critical or high vulnerabilities
+
+In this step we're going to fix the critical and high vulnerabilities in the image. We can use the `cves` command to get a list of the vulnerabilities in the image:
+
+```bash
+docker scout cves felipecruz/scout-demo:v4
+```
+In the output below, we can see that there are 8 vulnerabilities in 6 packages:
+
+```bash
+✓ Image stored for indexing
+ ✓ SBOM obtained from attestation, 76 packages found
+ ✓ Provenance obtained from attestation
+ ✓ Pulled
+ ✗ Detected 6 vulnerable packages with a total of 7 vulnerabilities
+
+
+## Overview
+
+                 │                Analyzed Image
+────────────────────┼────────────────────────────────────────────────
+Target            │  felipecruz/scout-demo:v4
+ digest          │  7003f869907c
+ platform        │ linux/arm64/v8
+ provenance      │ git@github.com:felipecruz91/biznagafest24.git
+                 │  acd37043e08bc2525692452755b3dd2ab23fe5d1
+ vulnerabilities │    0C     4H     4M     0L
+ size            │ 33 MB
+ packages        │ 76
+                 │
+Base image        │  alpine:3.20
+                 │  9cee2b382fe2
+
+
+## Packages and Vulnerabilities
+
+0C     1H     2M     0L  express 4.17.1
+pkg:npm/express@4.17.1
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ HIGH CVE-2022-24999 [OWASP Top Ten 2017 Category A9 - Using Components with Known Vulnerabilities]
+   https://scout.docker.com/v/CVE-2022-24999
+   Affected range  : <4.17.3
+   Fixed version   : 4.17.3
+   CVSS Score      : 7.5
+   CVSS Vector     : CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+   EPSS Score      : 1.95%
+   EPSS Percentile : 89th percentile
+
+ ✗ MEDIUM CVE-2024-43796 [Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')]
+   https://scout.docker.com/v/CVE-2024-43796
+   Affected range  : <4.20.0
+   Fixed version   : 4.20.0
+   CVSS Score      : 5.0
+   CVSS Vector     : CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L
+   EPSS Score      : 0.05%
+   EPSS Percentile : 18th percentile
+
+ ✗ MEDIUM CVE-2024-29041 [Improper Validation of Syntactic Correctness of Input]
+   https://scout.docker.com/v/CVE-2024-29041
+   Affected range  : <4.19.2
+   Fixed version   : 4.19.2
+   CVSS Score      : 6.1
+   CVSS Vector     : CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+   EPSS Score      : 0.04%
+   EPSS Percentile : 11th percentile
+
+
+0C     1H     0M     0L  body-parser 1.19.0
+pkg:npm/body-parser@1.19.0
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ HIGH CVE-2024-45590 [Asymmetric Resource Consumption (Amplification)]
+   https://scout.docker.com/v/CVE-2024-45590
+   Affected range  : <1.20.3
+   Fixed version   : 1.20.3
+   CVSS Score      : 7.5
+   CVSS Vector     : CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+   EPSS Score      : 0.05%
+   EPSS Percentile : 18th percentile
+
+
+0C     1H     0M     0L  path-to-regexp 0.1.7
+pkg:npm/path-to-regexp@0.1.7
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ HIGH CVE-2024-45296 [Inefficient Regular Expression Complexity]
+   https://scout.docker.com/v/CVE-2024-45296
+   Affected range  : <0.1.10
+   Fixed version   : 0.1.10
+   CVSS Score      : 7.5
+   CVSS Vector     : CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+   EPSS Score      : 0.04%
+   EPSS Percentile : 16th percentile
+
+
+0C     1H     0M     0L  qs 6.7.0
+pkg:npm/qs@6.7.0
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ HIGH CVE-2022-24999 [Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')]
+   https://scout.docker.com/v/CVE-2022-24999
+   Affected range  : >=6.7.0
+                   : <6.7.3
+   Fixed version   : 6.7.3
+   CVSS Score      : 7.5
+   CVSS Vector     : CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+   EPSS Score      : 1.95%
+   EPSS Percentile : 89th percentile
+
+
+0C     0H     1M     0L  send 0.17.1
+pkg:npm/send@0.17.1
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ MEDIUM CVE-2024-43799 [Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')]
+   https://scout.docker.com/v/CVE-2024-43799
+   Affected range  : <0.19.0
+   Fixed version   : 0.19.0
+   CVSS Score      : 5.0
+   CVSS Vector     : CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L
+   EPSS Score      : 0.05%
+   EPSS Percentile : 18th percentile
+
+
+0C     0H     1M     0L  serve-static 1.14.1
+pkg:npm/serve-static@1.14.1
+
+Dockerfile (14:17)
+RUN  apk add --no-cache npm \
+&& npm i --no-optional \
+&& npm cache clean --force \
+&& apk del npm
+
+ ✗ MEDIUM CVE-2024-43800 [Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')]
+   https://scout.docker.com/v/CVE-2024-43800
+   Affected range  : <1.16.0
+   Fixed version   : 1.16.0
+   CVSS Score      : 5.0
+   CVSS Vector     : CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L
+   EPSS Score      : 0.05%
+   EPSS Percentile : 21st percentile
+
+
+
+8 vulnerabilities found in 6 packages
+CRITICAL  0
+HIGH      4
+MEDIUM    4
+LOW       0
+```
+
+By looking at our `package.json` we see the only direct dependency is `express`. Let's update the version of the `express` package to the highest version that is not affected by any of the vulnerabilities.
+
+```diff
+...
+"dependencies": {
+-  "express": "4.17.1"
++  "express": "4.20.0"
+},
+...
+```
+
+Now let's rebuild the image and analyze it again.
+
+```bash
+docker build -t felipecruz/scout-demo:v5 --sbom=1 --provenance=mode=max .
+```
+
+```bash
+docker scout quickview felipecruz/scout-demo:v5
+```
+
+![v5-qv-web](images/v5-qv-web.png)
+
+Now we have no fixable or critical vulnerabilities in our image. Let's push this image to Docker Hub.
+
+```bash
+docker build -t felipecruz/scout-demo:v5 --sbom=1 --provenance=mode=max --push .
+```
+
+:tada: Our image is now compliant with all policies and its score is the highest - a shiny `A`! :tada:
+
+Bonus:
+
+Use the `compare` command to compare the first and latest image versions and see the improvements:
+
+```bash
+docker scout compare felipecruz/scout-demo:v5 --to felipecruz/scout-demo:v1
+```
+
+## Other resources
+
+- [Enhancing Your GitHub Workflow with Docker Scout](https://www.felipecruz.es/enhancing-your-github-workflow-with-docker-scout/)

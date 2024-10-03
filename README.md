@@ -123,3 +123,39 @@ Let's push the image to the registry so we can see the results in the Scout webs
 docker build -t felipecruz/scout-demo:v3 --sbom=1 --provenance=mode=max --push .
 ```
 ![v3-qv-web](images/v3-qv-web.png)
+
+
+v4: Run as non-root
+
+In this step we're going to define a non-root user that the container should run as. This will allow us to pass the "Run as non-root" policy.
+
+Let's update the Dockerfile to define a non-root user and build the new image:
+
+```diff
+...
+COPY . /app
+
++ RUN adduser -S appuser
++ RUN chown -R appuser /app
++ USER appuser
+
+CMD ["node","/app/app.js"]
+...
+```
+
+Now we can see that the "Run as non-root" policy has passed:
+
+```bash
+docker scout quickview felipecruz/scout-demo:v4
+```
+
+![v4-qv](images/v4-qv.png)
+
+
+Let's push the image to the registry so we can see the results in the Scout website:
+
+```bash
+docker build -t felipecruz/scout-demo:v4 --sbom=1 --provenance=mode=max --push .
+```
+
+![v4-qv-web](images/v4-qv-web.png)

@@ -2,7 +2,7 @@
 
 Title: "Cómo proteger de forma proactiva las aplicaciones en contenedores con Docker Scout."
 
-Slides: [Link](https://docs.google.com/presentation/d/1DOAvc0uEQ3jzQrTnJiWgo8f8WPFm0SJ8uUxuQauNavM/edit#slide=id.g30725f904bd_0_48).
+Slides: [Link](https://docs.google.com/presentation/d/1DOAvc0uEQ3jzQrTnJiWgo8f8WPFm0SJ8uUxuQauNavM/edit?usp=sharing).
 
 Date: 26/10/2024.
 
